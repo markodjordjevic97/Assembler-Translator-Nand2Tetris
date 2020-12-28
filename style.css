@@ -1,0 +1,134 @@
+/**************** Default Settings ****************/
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+    text-rendering: optimizeLegibility;
+}
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1.2;
+}
+/**************** Unos koda ****************/
+textarea {
+    font-weight: 600;
+    color: rgba(218, 47, 47, 0.8);
+    margin-top: 10px;
+    resize: none;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    box-shadow: 0px 0px 6px rgba(218, 47, 47, 0.8);
+    transition: all .7s ease;
+}
+textarea:focus {
+    background: rgba(218, 47, 47, 0.8);
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.8);
+    color: seashell;
+}
+.textarea-machine {
+    color: rgba(25, 182, 25, 0.8);
+    box-shadow: 0px 0px 6px rgba(25, 182, 25, 0.8);
+}
+/**************** Naslov i logo ****************/
+.header {
+    padding: 25px 40px;
+}
+@media only screen and (max-width: 992px){
+    .header {
+        text-align: center;
+    }
+    .btnTranslator {
+        margin-bottom: 30px;
+    }
+   
+}
+.header__h1 {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 3rem;
+    padding-left: 20px;
+}
+.header__img{
+    vertical-align: middle;
+}
+/**************** Kod i slika ****************/
+.main {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+    justify-content: center;
+    align-items: center;
+    padding: 25px 20px;
+    min-height: 76vh;
+}
+.main__col1 {
+   display: grid;
+   grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+   margin-bottom: 15px;
+}
+.main__col2 {
+    padding-left: 20px;
+    margin-top: -35px;
+    align-self: center;
+}
+.label{
+    display: block;
+    font-size: 1.4rem;
+}
+.label.main__col1-1 {
+    color: rgb(255, 51, 0);
+}
+.label.main__col1-2 {
+    color: rgb(25, 182, 25);
+}
+/**************** Button Translator ****************/
+.btnTranslator {
+    padding-top: 10px;
+    
+}
+.btnTranslator > button {
+    padding: 8px 110px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    background-color: rgb(207, 235, 50);
+    color: rgb(88, 88, 88);
+    transition: all .3s ease;
+}
+.btnTranslator > button:hover {
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, .8);
+    cursor: pointer;
+}
+.btnTranslator > a {
+    padding: 8px 70px;
+    font-size: 1.1rem;
+    text-decoration: none   ;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    background-color: rgb(240, 146, 38);
+    color: rgb(88, 88, 88);
+}
+.btnTranslator > a:hover {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, .8);
+    cursor: pointer;
+}
+/**************** Footer ****************/
+.footer {
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 25px 15px;
+    width: 100%;
+    color: #fff;
+    background-color: #000;
+}

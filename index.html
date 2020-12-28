@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Marko Djordjevic 12-2018">
+    <meta name="description" content="Assembler prevodilac iz citljivog koda coveka do masinskog koda nula i jedinica.">
+    <meta name="keywords" content="Nand2Tetris, Assembler, Prevodilac, Masinski jezik, ASM.js">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css" type="text/css">
+    <title>Assembler FTN Cacak</title>
+</head>
+
+<body>
+    <!-- Header section -->
+    <header class="header">
+            <img class="header__img" src="./img/ftn.jpg" alt="" width="100" height="100">
+            <h1 class="header__h1">JavaScript Assembler for Hack Computer</h1>
+    </header>
+    <!-- Logic Translator code -->
+    <main class="main">
+        <div class="main__col1">
+            <div >
+            <label class="label main__col1-1">
+                Enter Hack Assembly Code
+            </label>
+                <textarea id="hack_code" cols="35" rows="20"></textarea>
+            </div>
+            <div >
+            <label class="label main__col1-2">
+                Machine Code
+            </label>
+                <textarea class="textarea-machine" id="machine_code" cols="35" rows="20" disabled></textarea>
+            </div>
+            <div class="btnTranslator">
+                <button id="create">Assemble!</button>
+                <a download="prog.hack" id="downloadlink" style="display:none;color:#333;">Click to Download .hack file!</a>
+            </div>
+        </div>
+        <div class="main__col2">
+            <img src="./img/nand2tetris.png" alt="" height="300px" width="95%">
+        </div>
+        
+    </main>
+    <!-- Button for translate and download code -->
+    
+	<!-- Footer -->
+    <footer class="footer">
+        <p>Copyright &copy; Marko Djordjevic 12-2018 FTN Cacak.</p>
+    </footer>
+</body>
+   <script type="module" src="./index.js"></script>
+</html>
