@@ -61,6 +61,7 @@ import {SymbolTable} from './symbolTable.js';
 
 
 	var textFile = null,
+	// Event koji koristi Blob API za kreiranje download fajla
 	makeTextFile = function (text) {
 			var podatak = new Blob([text], { type: 'text/plain' });
 
