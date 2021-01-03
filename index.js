@@ -1,5 +1,7 @@
 import { InstructionC } from './instructionC.js';
 import {Utilities} from './utilities.js';
+import {SymbolTable} from './symbolTable.js';
+
 (function () {
 	function assemble(asmProgram) {
 		var assemblerOutput = '';
@@ -9,108 +11,57 @@ import {Utilities} from './utilities.js';
 		var ROMcounter = 0;
 		var RAMcounter = 16;
 
-		// split program into an array of instructions, one per line
+		// Kreiraj niz od unetih redova podataka
 		var instructionArray = asmProgram.split('\n');
 
-		// first pass identifies labels, adds them to symbol table
+		// Prvi prolaz identifikuje labele i dodaje ih u SymbolTable
 		instructionArray.forEach(function (instruction) {
 			instruction = utility.removeWhitespace(instruction);
 			instruction = utility.removeComments(instruction);
-			// if this line was empty space or a comment, skip it
+			// Ukoliko red ima komentar, samo preskoci
 			if (instruction === '') {
 				return;
 			} else if (utility.commandType(instruction) === 'C' || utility.commandType(instruction) === 'A') {
-				// increment counter to keep track of ROM addresses
+				// Inkrementiraj pomocu brojaca ROM adresu
 				ROMcounter++;
 			} else if (utility.commandType(instruction) === 'L') {
-				// add label to symbol table with current ROM address
+				// Dodaj labelu u SymbolTable sa trenutnom ROM adresom
 				symbolTable.addEntry(utility.getSymbol(instruction), ROMcounter);
 			}
 		});
 
-		// second pass identifies variables, adds them to symbol table, replaces symbols with addresses, and translates operations into machine code
+		// Drugim prolazom identifikuj promenljive, dodaj u symbol table, zameni simbole adresama, i prevedi naredbe u masinski kod
 		instructionArray.forEach(function (instruction) {
 			instruction = utility.removeWhitespace(instruction);
 			instruction = utility.removeComments(instruction);
-			// if this line was a full-line comment, empty space, or a label, skip it!
+			// Ako je komentar ili labela samo preskoci
 			if (instruction === '' || utility.commandType(instruction) === 'L') {
 				return;
 			} else if (utility.commandType(instruction) === 'A') {
 				var AValue = utility.getSymbol(instruction);
+				// Ukoliko nije ceo decimalni broj, vec simbol sacuvajte u SymbolTable
 				if (!Number.isInteger(parseInt(AValue, 10))) {
-					// if it's a symbol (not a decimal integer), save to symbol table and get its value
+					// U slucaju da symbol nije u tabeli, dodajte ga
 					if (!symbolTable.contains(AValue)) {
-						// if symbol isn't already in symbol table, add it and increase counter
 						symbolTable.addEntry(AValue, RAMcounter);
 						RAMcounter++;
 					}
-					// convert from symbol to address (decimal representation)
+					// konvertuj iz simbola u adresu
 					AValue = symbolTable.getAddress(AValue);
 				}
 				// convert from decimal to binary representation
-				assemblerOutput += getBinary16(AValue) + '\n';
+				assemblerOutput += utility.getBinary16(AValue) + '\n';
 			} else if (utility.commandType(instruction) === 'C') {
 				// convert C-instructions to binary representation
 				assemblerOutput += instC.getCInstructMachineCode(utility.operationFields(instruction)) + '\n';
 			}
 		});
-		function getBinary16 (decimalString) {
-			var decimalNum = parseInt(decimalString, 10);
-			var binaryString = decimalNum.toString(2);
-			if (binaryString.length > 16) {
-				// if larger than 16 bits in binary, truncate the string
-				return binaryString.slice(0,16);
-			}
-			// pad with leading zeros if needed
-			while (binaryString.length < 16) {
-				binaryString = '0' + binaryString;
-			}
-			return binaryString;
-		}
-		
-		// maps symbols to addresses:
-		function SymbolTable() {
-			// add symbol/address pair
-			this.addEntry = function(symbol, address) {
-				this[symbol] = address;
-			};
-			
-			// check if symbol is already in the table
-			this.contains = function(symbol) {
-				if (this.hasOwnProperty(symbol)) {
-					return true;
-				} else {
-					return false;
-				}
-			};
-			
-			// return address of given symbol
-			this.getAddress = function(symbol) {
-				if (this.contains(symbol)) {
-					return this[symbol];
-				}
-			};
-			
-			// predefined symbols:
-			this['SP'] = 0;
-			this['LCL'] = 1;
-			this['ARG'] = 2;
-			this['THIS'] = 3;
-			this['THAT'] = 4;
-			this['SCREEN'] = 16384;
-			this['KBD'] = 24576;
-			
-			// predefined symbols R0-R15
-			for (var i=0;i<=15;i++) {
-				this['R'+i] = i;
-			}
-		}
 		return assemblerOutput.trim();
 	};
 
 
 	var textFile = null,
-		makeTextFile = function (text) {
+	makeTextFile = function (text) {
 			var podatak = new Blob([text], { type: 'text/plain' });
 
 			// Da bi izbegli curenje memorije, oslobodi prethodnu kreiranu URL adresu
@@ -128,6 +79,11 @@ import {Utilities} from './utilities.js';
 		machineCode = document.getElementById('machine_code'),
 		downloadlink = document.getElementById('downloadlink')
 
+
+	hackCode.addEventListener('click', function(){
+		downloadlink.style.display = 'none';
+		create.style.display = 'inline-block';
+	},false);
 	// Event na koji se generise vrednost iz hackCode u Masinski kod 0 i 1
 	create.addEventListener('click', function () {
 		var assemblerOutput = assemble(hackCode.value);

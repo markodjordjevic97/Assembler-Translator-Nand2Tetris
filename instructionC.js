@@ -1,5 +1,4 @@
 export class InstructionC {
-     // Vrati 7 bita comp
      comp(key) {
         var comp = {
             '0': '0101010',
@@ -33,7 +32,6 @@ export class InstructionC {
         };
         return comp[key];
     }
-    // Vrati 3 bita dest
     dest(key) {
         var dest = {
             'null': '000',
@@ -47,8 +45,6 @@ export class InstructionC {
         };
         return dest[key];
     }
-
-    // Vrati 3 bita jump
     jump(key) {
         var jump = {
             'null': '000',
@@ -63,7 +59,7 @@ export class InstructionC {
         return jump[key];
     }
 
-    // Vrati celu instrukciju C
+    // Metoda koja vraca instrukciju C
     getCInstructMachineCode(polje) {
         var destCode = this.dest(polje.dest);
         var compCode = this.comp(polje.comp);
